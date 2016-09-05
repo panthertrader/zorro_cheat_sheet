@@ -1,0 +1,244 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% writeLaTeX Example: A quick guide to LaTeX
+%
+% Source: Dave Richeson (divisbyzero.com), Dickinson College
+% 
+% A one-size-fits-all LaTeX cheat sheet. Kept to two pages, so it 
+% can be printed (double-sided) on one piece of paper
+% 
+% Feel free to distribute this example, but please keep the referral
+% to divisbyzero.com
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook is a great place to start:
+% http://en.wikibooks.org/wiki/LaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=t,                    
+	keepspaces=false,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2 
+	%,frame=single
+}
+
+\lstset{style=mystyle,language=C}
+
+\begin{center}
+     \Large{\textbf{A quick guide to Zorro}} \\
+\end{center}
+\begin{multicols}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\section{What is Zorro?}
+Zorro is a free trading automation plattform. \href{http://www.opserver.de/ubb7/ubbthreads.php?ubb=cfrm}{Forum}
+
+\section{Variables}
+
+\scalebox{0.55}{
+\begin{tabular}{llllll}
+Type&Size (bytes)&Range&Step&Digits&Used for\\
+double, var&8&-1.8·10308to 1.8·10308&2.2·10-308&~14&prices\\
+float&4&-3.4·1038to 3.4·1038&1.2·10-38&~6&storing prices\\
+fixed&4&-1048577.999 to 1048576.999&0.001&~9&not for trading\\
+int, long&4&-2147483648 to 2147483647&1&~10&counting\\
+short&2&0 to 65536&1&~4&not for trading\\
+char&1&0 to 256&1&~2&text characters\\
+bool&4&true, false&-&-&decisions\\
+char*, string&characters+1&"..."&-&-&text\\
+var*, vars&elements*8&-1.8·10308to 1.8·10308&2.2·10-308&~14&arrays, series\\
+mat&rows*cols*8+12&-1.8·10308to 1.8·10308&2.2·10-308&~14&vectors, matrices
+\end{tabular}
+}
+
+\section{Skript Control}
+ 
+\begin{lstlisting}[title=if .. else]
+if (((x+3)<9) or (y==0))   // set z to 10 if x+3 is below 9, or if y is equal to 0
+z = 10;
+else    
+z = 5;// set z to 5 in all other cases
+\end{lstlisting}
+
+\begin{lstlisting}[title=while]
+x = 0;
+while(x < 100) // repeat while x is lower than 100
+x += 1; 
+\end{lstlisting}
+
+\begin{lstlisting}[title=for loop]
+int i;
+for(i=0; i<5; i++) // repeat 5 times
+x += i; 
+\end{lstlisting}
+
+
+\begin{lstlisting}[title=switch]
+int choice;
+...
+switch (choice)
+{
+	case 0:
+	printf("Zero! ");
+	break;
+	case 1:
+	printf("One! ");
+	break;
+	case 2: 
+	printf("Two! ");
+	break;
+	default:
+	printf("None of them! ");
+}
+\end{lstlisting}
+
+
+\section{Input/Output}
+
+
+
+
+\begin{description} 
+\item[printf] (string format, ...) 
+\item[print] (int to, string format,.)  
+\begin{itemize}
+	\item[TO\_WINDOW] print in [Test] and [Trade] mode to the message window and the log file (default for printf).
+	\item[TO\_LOG] print in [Test] mode only to the log file, in [Trade] and in STEPWISE mode also to the message window.
+	\item[TO\_FILE]
+	\item[TO\_ANY]
+	\item[TO\_DIAG]
+	\item[TO\_CSV]
+\end{itemize}   	
+\item[msg] (string format, ...): int
+\begin{itemize}
+	\item[0]  when [No] was clicked,
+	\item[1] when [Yes] was clicked.
+\end{itemize}
+\end{description}
+
+
+\section{File functions}
+\begin{description} 
+	\item[file\_copy] (string dest, string src)
+	\item[file\_delete] (string name)
+	\item[file\_length]
+	\item[file\_date]	
+	\item[file\_select] Opens a file dialog box at a given directory that lets the user select a file to open. Returns the selected file name including path.
+	\item[file\_content]  	\item[file\_read] Reads the content of a file into a string or array. Returns the number of read bytes.
+	\item[file\_write] Stores the content of a string, series, or other data array in a file.
+	\item[file\_append] Opens a file and appends text or other data to it; can be used to export data to Excel or other programs. If the file does not exist, it is created.
+	 
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Testing}
+\href{http://zorro-project.com/manual/en/testing.htm}{Testing}
+
+\subsection{Debugging}
+if(date() == 20150401) set(STEPWISE);
+watch ("!...", ...)
+
+\subsection{Biasis}
+
+Curve fitting bias, Market fitting bias, Peeking bias, Data mining bias, Trend bias, Granularity bias, Sample size bias
+
+\subsection{Asset Parameters}
+Spread, eg Spread = 3*PIP
+Slippage, default = 10
+Commission,  taken from AssetsFix.csv
+RollShort
+RollLong
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% code
+\section{Code}
+\let\clearpage\relax
+\include{code} 
+ 
+
+
+
+\section{Resources}
+ 
+\vfill
+\hrule
+~\\
+\end{multicols}
+
+\end{document}
